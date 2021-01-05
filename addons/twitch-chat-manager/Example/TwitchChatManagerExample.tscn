@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/twitch-chat-manager/TwitchChatManager.res" type="PackedScene" id=1]
+[ext_resource path="res://addons/twitch-chat-manager/Example/TwitchChatManagerExample.gd" type="Script" id=2]
+
+[node name="TwitchChatManagerExample" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TwitchChatManager" parent="." instance=ExtResource( 1 )]
+username = "asdfas"
+channel = "davidkbd"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Connect" type="Button" parent="VBoxContainer"]
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Connect"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Disconnect" type="Button" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 84.0
+margin_bottom = 44.0
+text = "Disconnect"
+
+[node name="SendText" type="Button" parent="VBoxContainer"]
+margin_top = 48.0
+margin_right = 84.0
+margin_bottom = 68.0
+text = "Hi World!"
+
+[node name="Incomming" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="connected" from="TwitchChatManager" to="." method="_on_TwitchChatManager_connected"]
+[connection signal="disconnected" from="TwitchChatManager" to="." method="_on_TwitchChatManager_disconnected"]
+[connection signal="message_received" from="TwitchChatManager" to="." method="_on_TwitchChatManager_message_received"]
+[connection signal="oauth_canceled" from="TwitchChatManager" to="." method="_on_TwitchChatManager_oauth_canceled"]
+[connection signal="pressed" from="VBoxContainer/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="pressed" from="VBoxContainer/Disconnect" to="." method="_on_Disconnect_pressed"]
+[connection signal="pressed" from="VBoxContainer/SendText" to="." method="_on_SendText_pressed"]
