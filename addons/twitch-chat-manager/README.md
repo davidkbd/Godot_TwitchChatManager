@@ -2,6 +2,8 @@
 ### Utility for Twitch IRC Integration
 Here is a utility that allows recive messages and commands from the Twitch's Chat. This utility can send messages too.
 
+You can find a example in the Example folder.
+
 ### Example code (Load Encrypted Data)
 
 ### Thats all!
