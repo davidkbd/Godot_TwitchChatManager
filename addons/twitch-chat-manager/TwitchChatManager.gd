@@ -6,6 +6,7 @@ extends Node
 #
 
 signal connected
+signal channel_not_found
 signal disconnected
 signal message_received
 signal oauth_canceled
@@ -35,6 +36,9 @@ func _on_TwitchChatManagerIrcController_chan_joined(channel):
 	emit_signal("connected")
 	connection_retries = 0
 
+func _on_TwitchChatManagerIrcController_chan_not_found():
+	emit_signal("channel_not_found")
+
 func _on_TwitchChatManagerIrcController_disconnected():
 	emit_signal("disconnected")
 
@@ -63,4 +67,3 @@ func _on_TwitchChatManagerOauthController_token_captured():
 
 func _on_TwitchChatManagerOauthController_canceled():
 	emit_signal("oauth_canceled")
-

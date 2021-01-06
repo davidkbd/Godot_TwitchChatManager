@@ -7,6 +7,7 @@ extends Node
 
 signal msg_received(user, message)
 signal chan_joined(channel)
+signal chan_not_found
 signal disconnected
 signal connection_dropped
 signal not_oauth_token_found
@@ -24,7 +25,10 @@ const connection_timeout : int    = 4
 const twitch_irc_host    : String = "irc.chat.twitch.tv"
 const twitch_irc_port    : int    = 6667
 
+var joined_to : String
+
 func connect_to_server():
+	joined_to = ""
 	if oauth_controller.oauth == "":
 		emit_signal("not_oauth_token_found")
 		return
@@ -77,6 +81,7 @@ func _process(delta : float):
 		if bytes > 0:
 			var buffer : String = socket.get_utf8_string(bytes)
 			for line in buffer.split("\n"):
+				print(line)
 				var msg = line.split(" ")
 				if msg.size() < 2: continue
 				elif msg[1] == "PRIVMSG":
@@ -98,6 +103,10 @@ func _process(delta : float):
 					send("PONG %s" % msg[1])
 				elif msg[1] == "JOIN":
 					emit_signal("chan_joined", msg[2])
+					joined_to = msg[2]
+				elif msg[1] == "001":
+					yield(get_tree().create_timer(4.0), "timeout")
+					if joined_to == "": emit_signal("chan_not_found")
 #				else:
 #					print("> ", line)
 	else:

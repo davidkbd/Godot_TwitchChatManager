@@ -1,7 +1,5 @@
 extends Control
 
-
-
 func _on_Connect_pressed():
 	$TwitchChatManager.connect_to_server()
 
